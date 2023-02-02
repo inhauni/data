@@ -1,4 +1,4 @@
-# pokemon game v0.2
+# pokemon game v0.4
 # 중복코드 제거, getter setter
 
 class Pokemon:
@@ -7,17 +7,18 @@ class Pokemon:
         self.skills = skills.split('/')
         print(f"포켓몬 생성 :", end=' ')
 
+    # built in decorator 사용
+    @property
+    def owner(self):
+        return self.__hidden_owner
 
-    def get_owner(self):
-        return self.hidden_owner
-
-    def set_owner(self, owner):
+    @owner.setter
+    def owner(self, owner):
         self.hidden_owner = owner
 
-    owner = property(get_owner, set_owner)
 
     def info(self):
-        print(f"{self.get_owner}의 포켓몬이 사용 가능한 스킬")
+        print(f"{self.hidden_owner}의 포켓몬이 사용 가능한 스킬")
         for i in range(len(self.skills)):
             print(f'{i+1} : {self.skills[i]}')
 
@@ -35,7 +36,7 @@ class Pikachu(Pokemon):  # inheritance
         print(f"{self.name}")
 
     def attack(self, idx):  # override
-        print(f'{self.get_owner}의 {self.name}가 {self.skills[idx]} 공격(전기) 시전!')
+        print(f'{self.hidden_owner}의 {self.name}가 {self.skills[idx]} 공격(전기) 시전!')
 
 
 class Ggoboogi(Pokemon):  # inheritance
@@ -45,7 +46,7 @@ class Ggoboogi(Pokemon):  # inheritance
         print(f"{self.name}")
 
     def attack(self, idx):  # override
-        print(f'{self.get_owner}의 {self.name}가 {self.skills[idx]} 공격(물) 시전!')
+        print(f'{self.hidden_owner}의 {self.name}가 {self.skills[idx]} 공격(물) 시전!')
 
     def swim(self):
         print(f'{self.name}가 수영을 합니다')
@@ -58,7 +59,7 @@ class Pairi(Pokemon):  # inheritance
         print(f"{self.name}")
 
     def attack(self, idx):  # override
-        print(f'{self.get_owner}의 {self.name}가 {self.skills[idx]} 공격(불) 시전!')
+        print(f'{self.hidden_owner}의 {self.name}가 {self.skills[idx]} 공격(불) 시전!')
 
 
 while True:
@@ -72,6 +73,8 @@ while True:
         s = input('사용 가능한 기술 입력(/로 구분하여 입력) :')
         if pokemon == '1':
             p = Pikachu(n, s)
+            p.__hidden_owner="한지우" #hidden앞에 __를 두개 넣어주면 한지우가 반영되지 못한다
+        #     p.owner="한지우" -> property가 setter로 동작
         elif pokemon == '2':
             p = Ggoboogi(n, s)
         elif pokemon == '3':
