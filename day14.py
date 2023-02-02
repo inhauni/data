@@ -1,11 +1,14 @@
-# pokemon game v0.4
+# pokemon game v0.5
 # 중복코드 제거, getter setter
 
 class Pokemon:
+
+    count=0 # 클래스 변수
     def __init__(self, owner, skills):
         self.hidden_owner = owner
         self.skills = skills.split('/')
         print(f"포켓몬 생성 :", end=' ')
+        # self.count += 1
 
     # built in decorator 사용
     @property
@@ -63,6 +66,7 @@ class Pairi(Pokemon):  # inheritance
 
 
 while True:
+    print(f'포켓몬 개수 :{Pokemon.count}')
     menu = input('1) 포켓몬 생성  2) 프로그램 종료 : ')
     if menu == '2':
         print('프로그램을 종료합니다')
@@ -86,3 +90,5 @@ while True:
         p.attack(int(attack_menu)-1)
     else:
         print('메뉴에서 골라 주세요')
+
+    Pokemon.count += 1
