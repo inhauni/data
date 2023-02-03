@@ -98,66 +98,104 @@
 
     ## 함수 선언 부분 ##
 
-def printPoly(t_x,p_x):
-    '''
+# def printPoly(t_x,p_x):
+#     '''
+#
+#     :param p_x: 계수를 원소로 가지는 list
+#     :return: 다항식 형태 출력
+#     '''
+#
+#
+#
+#     polyStr = "P(x) = "
+#
+#     for i in range(len(p_x)):
+#         term = t_x[i]
+#         coef = p_x[i]  # 계수
+#
+#
+#         if coef == 0:
+#             i += 1
+#             continue
+#
+#         if i > 0 and coef > 0:  # 첫항의 +는 빼주기
+#             polyStr += "+"
+#
+#         polyStr += f'{coef}x^{term} '
+#
+#     return polyStr
+#
+#
+# def calcPoly(xVal,t_x, p_x):
+#
+#     '''
+#     다항식의 산술연산을 하는 함수
+#     :param xVal: x에 대입할 값
+#     :param p_x: 계수를 원소로 가지는 list
+#     :return: 다항식 계산 결과 값
+#     '''
+#
+#     retValue = 0
+#      # 차수
+#     for i in range(len(p_x)):
+#         term = t_x[i]
+#         coef = p_x[i]  # 계수
+#         retValue += coef * xVal ** term
+#
+#
+#     return retValue
+#
+#
+#     ## 전역 변수 선언 부분 ##
+#
+# tx = [300, 20, 0]
+# px = [7, 0, 5]
+#
+#     ## 메인 코드 부분 ##
+# if __name__ == "__main__":
+#     pStr = printPoly(tx, px)
+#     print(pStr)
+#
+#     xValue = int(input("X 값-->"))
+#
+#     pxValue = calcPoly(xValue, tx, px)
+#     print(pxValue)
+#
 
-    :param p_x: 계수를 원소로 가지는 list
-    :return: 다항식 형태 출력
-    '''
+def insert_data (position, friend):
+
+    len_friends = len(friends)
+
+    if position < 0 or position > len_friends:
+        print("Out of range.")
+        return
+
+    friends.append(None)  # 빈칸 추가
+      # 배열의 현재 크기
+
+    for i in range(len_friends - 1, position, -1):  # 맨끝에 데이터 삽입시 이 코드 안 돌아감
+        friends[i] = friends[i - 1]
+        friends[i - 1] = None
+
+    friends[position] = friend
+
+def add_friends(name,num):
+
+    len_friends = len(friends)
+
+    for i in range(len_friends):
+
+        if friends[i][1]<=num:
+            insert_data(i, (name,num))
+            break
+        if i == len_friends -1:
+            insert_data(len_friends, (name,num))
 
 
 
-    polyStr = "P(x) = "
 
-    for i in range(len(p_x)):
-        term = t_x[i]
-        coef = p_x[i]  # 계수
-
-
-        if coef == 0:
-            i += 1
-            continue
-
-        if i > 0 and coef > 0:  # 첫항의 +는 빼주기
-            polyStr += "+"
-
-        polyStr += f'{coef}x^{term} '
-
-    return polyStr
-
-
-def calcPoly(xVal,t_x, p_x):
-
-    '''
-    다항식의 산술연산을 하는 함수
-    :param xVal: x에 대입할 값
-    :param p_x: 계수를 원소로 가지는 list
-    :return: 다항식 계산 결과 값
-    '''
-
-    retValue = 0
-     # 차수
-    for i in range(len(p_x)):
-        term = t_x[i]
-        coef = p_x[i]  # 계수
-        retValue += coef * xVal ** term
-
-
-    return retValue
-
-
-    ## 전역 변수 선언 부분 ##
-
-tx = [300, 20, 0]
-px = [7, 0, 5]
-
-    ## 메인 코드 부분 ##
-if __name__ == "__main__":
-    pStr = printPoly(tx, px)
-    print(pStr)
-
-    xValue = int(input("X 값-->"))
-
-    pxValue = calcPoly(xValue, tx, px)
-    print(pxValue)
-
+friends=[('다현',200),('정연',150),('쯔위',90),('사나',30),('지효',15)]
+fname = input("추가할 친구 --> ")
+number = int(input("카톡 횟수 --> "))
+add_friends(fname,number)
+print(friends)
