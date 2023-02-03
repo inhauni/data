@@ -161,41 +161,89 @@
 #     pxValue = calcPoly(xValue, tx, px)
 #     print(pxValue)
 #
+#
+# # <카톡 친구 자동 삽입>
+# def insert_data (position, friend):
+#
+#     len_friends = len(friends)
+#
+#     if position < 0 or position > len_friends:
+#         print("Out of range.")
+#         return
+#
+#     friends.append(None)  # 빈칸 추가
+#       # 배열의 현재 크기
+#
+#     for i in range(len_friends - 1, position, -1):  # 맨끝에 데이터 삽입시 이 코드 안 돌아감
+#         friends[i] = friends[i - 1]
+#         friends[i - 1] = None
+#
+#     friends[position] = friend
+#
+# def add_friends(name,num):
+#     '''
+#
+#     :param name: 친구 이름
+#     :param num: 연락 횟수
+#     :return: 연락 횟수를 내림차순으로 정렬하여 friends 리스트에 새 친구 추가
+#     '''
+#
+#     len_friends = len(friends)
+#
+#     for i in range(len_friends):
+#
+#         if friends[i][1]<=num:
+#             insert_data(i, (name,num))
+#             break
+#         if i == len_friends -1:
+#             insert_data(len_friends, (name,num))
+#
+#
+#
+#
+# friends = [('다현',200), ('정연',150), ('쯔위',90), ('사나',30), ('지효',15)]
+#
+# fname = input("추가할 친구 --> ")
+# number = int(input("카톡 횟수 --> "))
+# add_friends(fname, number)
+# print(friends)
 
-def insert_data (position, friend):
+## 클래스와 함수 선언 부분 ##
 
-    len_friends = len(friends)
+class Node:    # 노드 클래스 생성
+	def __init__ (self) :
+	    self.data = None
+	    self.link = None
 
-    if position < 0 or position > len_friends:
-        print("Out of range.")
-        return
+def printNodes(start):
+	current = start     # 헤드를 받아서 current에 넣음
+	if current == None :
+		return
+	print(current.data, end = ' ') # head의 데이터 우선 출력
 
-    friends.append(None)  # 빈칸 추가
-      # 배열의 현재 크기
+	while current.link != None:  # 마지막 노드의 링크에 닿기 전까지 진행
+		current = current.link
+		print(current.data, end = ' ')  # 마지막 노드의 데이터까지 출력하고 종료
+	print()  # current == None 일경우 return하는 None값을 print
 
-    for i in range(len_friends - 1, position, -1):  # 맨끝에 데이터 삽입시 이 코드 안 돌아감
-        friends[i] = friends[i - 1]
-        friends[i - 1] = None
+## 전역 변수 선언 부분 ##
+memory = []
+head, current, pre = None, None, None
+dataArray = ["다현", "정연", "쯔위", "사나", "지효"]
 
-    friends[position] = friend
+## 메인 코드 부분 ##
+if __name__ == "__main__" :
 
-def add_friends(name,num):
+	node = Node()		# 첫 번째 노드
+	node.data = dataArray[0]
+	head = node    # head로 지정
+	memory.append(node)  # 메모리 안에 노드 저장
 
-    len_friends = len(friends)
+	for data in dataArray[1:] :	# 두 번째 이후 노드
+		pre = node  # 이전 노드를 pre로 지정
+		node = Node()   # 새 노드 생성
+		node.data = data
+		pre.link = node   # 이전 노드의 link를 새 노드의 주소로 지정
+		memory.append(node)  # 메모리에 새 노드 삽입
 
-    for i in range(len_friends):
-
-        if friends[i][1]<=num:
-            insert_data(i, (name,num))
-            break
-        if i == len_friends -1:
-            insert_data(len_friends, (name,num))
-
-
-
-
-friends=[('다현',200),('정연',150),('쯔위',90),('사나',30),('지효',15)]
-fname = input("추가할 친구 --> ")
-number = int(input("카톡 횟수 --> "))
-add_friends(fname,number)
-print(friends)
+	printNodes(head)   # 첫번째 노드를 함수에 대입
