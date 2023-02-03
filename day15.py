@@ -98,50 +98,66 @@
 
     ## 함수 선언 부분 ##
 
-def printPoly(p_x):
+def printPoly(t_x,p_x):
+    '''
 
-    term = len(p_x)-1  # 최고차항 차수
+    :param p_x: 계수를 원소로 가지는 list
+    :return: 다항식 형태 출력
+    '''
+
+
 
     polyStr = "P(x) = "
 
     for i in range(len(p_x)):
-
+        term = t_x[i]
         coef = p_x[i]  # 계수
 
+
         if coef == 0:
-            term = term-1
+            i += 1
             continue
-        if coef>=0:
+
+        if i > 0 and coef > 0:  # 첫항의 +는 빼주기
             polyStr += "+"
 
         polyStr += f'{coef}x^{term} '
-        term -= 1
+
     return polyStr
 
 
-def calcPoly(xVal, p_x):
+def calcPoly(xVal,t_x, p_x):
+
+    '''
+    다항식의 산술연산을 하는 함수
+    :param xVal: x에 대입할 값
+    :param p_x: 계수를 원소로 가지는 list
+    :return: 다항식 계산 결과 값
+    '''
+
     retValue = 0
-    term = len(p_x) - 1 # 차수
+     # 차수
     for i in range(len(p_x)):
+        term = t_x[i]
         coef = p_x[i]  # 계수
-        retValue += coef * xValue ** term
-        term -= 1
+        retValue += coef * xVal ** term
+
 
     return retValue
 
 
     ## 전역 변수 선언 부분 ##
 
-# tx = [300, 20, 0]
-px = [7, -4, 0, 5]
+tx = [300, 20, 0]
+px = [7, 0, 5]
 
     ## 메인 코드 부분 ##
 if __name__ == "__main__":
-    pStr = printPoly(px)
+    pStr = printPoly(tx, px)
     print(pStr)
 
     xValue = int(input("X 값-->"))
 
-    pxValue = calcPoly(xValue, px)
+    pxValue = calcPoly(xValue, tx, px)
     print(pxValue)
 
