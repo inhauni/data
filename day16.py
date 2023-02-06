@@ -131,6 +131,46 @@ def makeSquare(odd,even):
         current=current.link
 
 
+def countNumber():
+    global memory,head,current,pre
+
+    odd,even,zero=0,0,0
+
+    # if head==None:
+    #     return False
+
+    current = head
+    while True:
+        if current.data !=0:
+            if current.data > 0:
+                even += 1
+            else:
+                odd += 1
+        else:
+            zero += 1
+        if current.link == head:
+            break
+        current = current.link
+
+    return even, odd, zero
+
+def decideNumber():
+    global head, current
+
+    current=head
+
+    while True:
+        if current.data == 0:
+            return current.data
+        else:
+            current.data *= -1
+        if current.link == head:
+            break
+        current = current.link
+
+
+
+
 
 memory=[]
 head,current,pre=None,None,None
@@ -140,7 +180,7 @@ if __name__ =="__main__":
 
     dataArray=[]
     for i in range(7):
-        dataArray.append(random.randint(1,10))
+        dataArray.append(random.randint(-100,100))
 
     node=Node()
     node.data=dataArray[0]  #첫번쨰 노드
@@ -158,11 +198,9 @@ if __name__ =="__main__":
 
     printNodes(head)
 
-
-    # oddcount, evencount =countOddEven()
-    odd_even=countOddEven()
-    print(f'홀수 : {odd_even[0]}, 짝수 : {odd_even[1]}')
-    makeSquare(odd_even[0],odd_even[1])
+    count_num=countNumber()
+    print(f'+ : {count_num[0]}개 / - : {count_num[1]}개 / 0 : {count_num[2]}개')
+    decideNumber()
     printNodes(head)
 
 
