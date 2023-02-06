@@ -1,4 +1,5 @@
 #원형 리스트
+import random
 
 
 class Node():
@@ -94,15 +95,55 @@ def is_find(findData):
 
     return Node()
 
+def countOddEven():
+    global memory,head,current,pre
+
+    odd,even=0,0
+
+    if head==None:
+        return False
+
+    current=head
+    while True:
+        if current.data%2==0:
+            even +=1
+        else:
+            odd +=1
+
+        if current.link==head:
+            break
+        current=current.link
+
+    return odd, even
+
+
+def makeMinus(odd,even):
+    if odd>even:
+        reminder = 1
+    else:
+        reminder =0
+
+    current=head
+    while True:
+
+        if current.data%2 == reminder:
+            current.data *= -1
+        if current.link == head:
+            break
+
+        current=current.link
 
 
 
 memory=[]
 head,current,pre=None,None,None
-dataArray=["다현","정연","쯔위","사나","지효"]
 
 
 if __name__ =="__main__":
+
+    dataArray=[]
+    for i in range(7):
+        dataArray.append(random.randint(1,100))
 
     node=Node()
     node.data=dataArray[0]  #첫번쨰 노드
@@ -118,28 +159,13 @@ if __name__ =="__main__":
         node.link=head
         memory.append(node)
 
-
     printNodes(head)
 
-    insertNodes("다현","화사")
+
+    oddcount, evencount =countOddEven()
+    print(f'홀수 --> {oddcount}, 짝수 --> {evencount}')
+    makeMinus(oddcount,evencount)
     printNodes(head)
 
-    insertNodes("사나", "솔라")
-    printNodes(head)
 
-    insertNodes("재남", "문별")
-    printNodes(head)
 
-    deleteNodes("화사")
-    printNodes(head)
-
-    deleteNodes("솔라")
-    printNodes(head)
-
-    deleteNodes("이나")
-    printNodes(head)
-
-    fNode=is_find("이나")
-    print(fNode.data)
-    fNode = is_find("다현")
-    print(fNode.data)
