@@ -52,6 +52,48 @@ def insertNodes(find_data,insert_data):
     node.link=head
     current.link=node
 
+def deleteNodes(deleteData):
+    global memory,head,current,pre
+
+    if head.data==deleteData:       # 첫번째 노드 삭제
+        current=head
+        head=head.link
+        last= head
+        while last.link!=current:
+            last=last.link
+        last.link=head
+        del(current)
+        return
+
+    current=head
+    while current.link!=head:
+        pre=current
+        current=current.link
+        if current.data==deleteData:
+            pre.link=current.link
+            del(current)
+            return
+    print(f"{deleteData}는 존재하지 않는 이름입니다 \n수정결과 : ")
+
+
+def is_find(findData):
+    '''
+    연결 리스트 안에서 원소 존재 여부 판정
+    :param findData: 찾고자 하는 원소 .srt
+    :return: 연결 리스트 안에서 원소가 존재하면 True 아니면 False 리턴
+    '''
+
+    global memory, head, current, pre
+    current=head
+    if current.data==findData:
+        return current
+    while current.link != head:
+       current=current.link
+       if current.data == findData:
+           return current
+
+    return Node()
+
 
 
 
@@ -87,3 +129,17 @@ if __name__ =="__main__":
 
     insertNodes("재남", "문별")
     printNodes(head)
+
+    deleteNodes("화사")
+    printNodes(head)
+
+    deleteNodes("솔라")
+    printNodes(head)
+
+    deleteNodes("이나")
+    printNodes(head)
+
+    fNode=is_find("이나")
+    print(fNode.data)
+    fNode = is_find("다현")
+    print(fNode.data)
