@@ -84,48 +84,106 @@
 
 
 
+## 5장 2
+#
+# class Node():
+#     def __init__(self):
+#         self.data=None
+#         self.flink=None
+#         self.blink=None
+#
+#
+# def printNode(start):
+#
+#     current=start
+#     if current==None:
+#         return
+#     print('정방향 : ', current.data, end=' ')
+#     while current.blink != None:
+#         current=current.blink
+#         print(current.data, end=' ')
+#     print('\n역방향 : ', current.data, end=' ')
+#     while current.flink != None:
+#         current=current.flink
+#         print(current.data, end=' ')
+#     print()
+#
+#
+# memory=[]
+# head, pre, current = None, None, None
+# dataArray=["다현","정연","쯔위","사나","지효"]
+#
+# if __name__ == "__main__":
+#
+#     node=Node()
+#     node.data=dataArray[0]
+#     head=node
+#     memory.append(node)
+#
+#     for data in dataArray[1:]:
+#         pre=node
+#         node = Node()
+#         node.data=data
+#         pre.blink = node
+#         node.flink = pre
+#         memory.append(node)
+#
+#     printNode(head)
 
-class Node():
-    def __init__(self):
-        self.data=None
-        self.flink=None
-        self.blink=None
+def isStackFull():
+    global SIZE, top, stack
+    if top>=SIZE-1:
 
+        return True
+    return False
 
-def printNode(start):
+def isStackEmpty():
+    global SIZE, top, stack
+    if top==-1:
+        return True
+    return False
 
-    current=start
-    if current==None:
+def push(data):
+    global SIZE, top, stack
+    if isStackFull():
+        print("Stack is full.")
         return
-    print('정방향 : ', current.data, end=' ')
-    while current.blink != None:
-        current=current.blink
-        print(current.data, end=' ')
-    print('\n역방향 : ', current.data, end=' ')
-    while current.flink != None:
-        current=current.flink
-        print(current.data, end=' ')
-    print()
+    top+=1
+    stack[top]=data
 
+def pop():
+    global SIZE, top, stack
+    if isStackEmpty():
+        print("Stack is empty!")
+        return
+    temp=stack[top]
+    stack[top]=None
+    top-=1
+    return temp
 
-memory=[]
-head, pre, current = None, None, None
-dataArray=["다현","정연","쯔위","사나","지효"]
+def peek():
+    global SIZE, top, stack
+    if isStackEmpty():
+        return None
+    return stack[top]
+
+SIZE=7
+top=-1
+stack=[None for _ in range(SIZE)]
+
 
 if __name__ == "__main__":
 
-    node=Node()
-    node.data=dataArray[0]
-    head=node
-    memory.append(node)
+    stone=["빨강","주황","노랑","초록","파랑","남색","보라"]
 
-    for data in dataArray[1:]:
-        pre=node
-        node = Node()
-        node.data=data
-        pre.blink = node
-        node.flink = pre
-        memory.append(node)
+    print('가는길 : 우리집 ->' ,end=' ')
+    for go in stone:
+        push(go)
+        print(go,"->",end=' ')
+    print('과자집')
 
-    printNode(head)
+    print('오는길 : 과자집 ->',end=' ')
+    for back in stack:
+        print(pop(), '->', end=' ')
+    print('우리집')
 
