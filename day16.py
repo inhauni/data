@@ -100,24 +100,23 @@ def countOddEven():
 
     odd,even=0,0
 
-    if head==None:
-        return False
+    # if head==None:
+    #     return False
 
-    current=head
+    current = head
     while True:
-        if current.data%2==0:
-            even +=1
+        if current.data % 2 == 0:
+            even += 1
         else:
-            odd +=1
-
-        if current.link==head:
+            odd += 1
+        if current.link == head:
             break
-        current=current.link
+        current = current.link
 
     return odd, even
 
 
-def makeMinus(odd,even):
+def makeSquare(odd,even):
     if odd>even:
         reminder = 1
     else:
@@ -125,12 +124,10 @@ def makeMinus(odd,even):
 
     current=head
     while True:
-
-        if current.data%2 == reminder:
-            current.data *= -1
-        if current.link == head:
+        if current.data % 2 == reminder:
+            current.data *= current.data
+        if current.link==head:
             break
-
         current=current.link
 
 
@@ -143,7 +140,7 @@ if __name__ =="__main__":
 
     dataArray=[]
     for i in range(7):
-        dataArray.append(random.randint(1,100))
+        dataArray.append(random.randint(1,10))
 
     node=Node()
     node.data=dataArray[0]  #첫번쨰 노드
@@ -162,9 +159,10 @@ if __name__ =="__main__":
     printNodes(head)
 
 
-    oddcount, evencount =countOddEven()
-    print(f'홀수 --> {oddcount}, 짝수 --> {evencount}')
-    makeMinus(oddcount,evencount)
+    # oddcount, evencount =countOddEven()
+    odd_even=countOddEven()
+    print(f'홀수 : {odd_even[0]}, 짝수 : {odd_even[1]}')
+    makeSquare(odd_even[0],odd_even[1])
     printNodes(head)
 
 
