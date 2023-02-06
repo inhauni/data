@@ -1,52 +1,89 @@
+#원형 리스트
+
+
 class Node():
     def __init__(self):
-        self.data=None
-        self.link=None
+        self.data = None
+        self.link = None
+
 
 def printNodes(start):
     current = start
-    if current ==None:
+    if current.link == None:
         return
-    print(current.data,end='')
-    while current.link != None:
-        current=current.link
-        print(current.data,end='')
+    print(current.data,end=' ')
+    while current.link != start:
+        current = current.link
+        print(current.data, end=' ')
     print()
 
-def makeSimpleLinkedList(namePhone):
+
+
+
+def insertNodes(find_data,insert_data):
     global memory, head, current,pre
-    printNodes(head)
 
-    node =Node()    # 새 노드 추가
-    node.data =namePhone
-    memory.append(node)
 
-    if head ==None:     # 첫번째 노드일 때
-        head=node
-        return
-    if head.data[0]>namePhone[0]:  #첫번째 노드보다 작을 때
+    if head.data==find_data:                    # 첫번째 노드 삽입
+        node=Node()
+        node.data=insert_data
         node.link=head
+        last=head
+        while last.link!=head:
+            last=last.link
+        last.link=node
         head=node
         return
 
     current=head
-    while current.link != None:  # 중간에 삽입
+    while current.link!=head:                        # 중간 노드 삽입
         pre=current
-        current =current.link
-        if current.data[0]>namePhone[0]:
-            pre.link=node
+        current=current.link
+        if current.data==find_data:
+            node=Node()
+            node.data=insert_data
             node.link=current
+            pre.link=node
             return
 
-    current.link=node # 삽입하는 노드의 값이 가장 큰 경우
 
-s
+    node=Node()                                 # 마지막에 노드 삽입
+    node.data=insert_data
+    node.link=head
+    current.link=node
+
+
+
+
 memory=[]
 head,current,pre=None,None,None
-dataArray=[["지민","010-1111-1111"],["정국","010-2222-2222"],["뷔","010-3333-3333"],["슈가","010-4444-4444"],["진","010-5555-5555"]]
+dataArray=["다현","정연","쯔위","사나","지효"]
+
 
 if __name__ =="__main__":
-    for data in dataArray:
-        makeSimpleLinkedList(data)
 
+    node=Node()
+    node.data=dataArray[0]  #첫번쨰 노드
+    head=node
+    node.link=head  # (단순연결에서는 없었던 부분)
+    memory.append(node)
+
+    for data in dataArray[1:]:
+        pre=node
+        node=Node()
+        node.data=data
+        pre.link=node
+        node.link=head
+        memory.append(node)
+
+
+    printNodes(head)
+
+    insertNodes("다현","화사")
+    printNodes(head)
+
+    insertNodes("사나", "솔라")
+    printNodes(head)
+
+    insertNodes("재남", "문별")
     printNodes(head)
