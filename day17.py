@@ -1,80 +1,86 @@
+#이진트리
+
+class TreeNode():
+    def __init__(self):
+        self.left=None
+        self.data=None
+        self.right=None
 
 
-def is_queueFull():
-    global SIZE,queue,rear,front
-
-    if (rear+1) % SIZE == front:
-        return True
-    return False
-
-def is_queueEmpty():
-    global SIZE,queue,rear,front
-
-    if rear == front:
-        return True
-    return False
-
-def enQueue(data):
-    global SIZE,queue,rear,front
-
-    if is_queueFull():
-        print("Queue is Full")
-        return
-    rear = (rear+1) % SIZE
-    queue[rear]= data
+memory=[]
+root=None
+nameAry=["블랙핑크"'레드벨벳','마마무','에이핑크','걸스데이','트와이스']
 
 
-def deQueue():
-    global SIZE,queue,rear,front
-    if is_queueEmpty():
-        print("Queue is Empty")
-        return
-    front=(front+1) % SIZE
-    data =queue[front]
-    queue[front]=None
-    return data
+node =TreeNode()
+node.data=nameAry[0]
+root=node
+memory.append(node)
 
-def peek():
-    global SIZE,queue,rear,front
-    if is_queueEmpty():
-        print("Queue is Empty")
-        return None
-    return queue[(front+1) % SIZE]
+# 이진 탐색 트리 생성
+for name in nameAry:
 
+    node=TreeNode()
+    node.data=name
 
-
-
-SIZE= 5
-queue =[None for _ in range(SIZE)]
-rear= front = 0  # top의 초기값
-
-if __name__ == "__main__":
-
-    select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
-
+    current=root
     while True:
-
-        if select == 'X' or select == 'x':
-            print("프로그램 종료")
-            break
-        elif select == 'I' or select == 'i':
-            data = input("입력할 데이터 => ")
-            enQueue(data)
-            print("스택 상태 : ", queue, "\n")
-            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
-        elif select == 'E' or select == 'e':
-            data = deQueue()
-            print("추출된 데이터 : ", data)
-            print("스택 상태 : ", queue, "\n")
-            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
-        elif select == 'V' or select == 'v':
-            data = peek()
-            print("확인된 데이터 : ", data)
-            print("스택 상태 : ", queue, "\n")
-            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
+        if name<current.data:
+            if current.left==None:
+                current.left=node
+                break
+            current=current.left
         else:
-            print("올바른 코드를 입력하시오\n")
-            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
-            
+            if current.right ==None:
+                current.right=node
+                break
+            current=current.right
+
+    memory.append(node)
+
+
+deleteName='마마무'
+
+current=root
+parent=None
+while True:
+    if deleteName==current.data:
+
+        if current.left == None and current.right ==None:
+            if parent.left==current:
+                parent.left=None
+            else:
+                parent.right=None
+            del(current)
+
+        elif current.left != None and current.right ==None:
+            if parent.left==current:
+                parent.left=current.left
+            else:
+                parent.right=current.left
+            del(current)
+
+        elif current.left == None and current.right != None:
+            if parent.left == current:
+                parent.left = current.right
+            else:
+                parent.right = current.right
+            del (current)
+
+        print(deleteName,'이(가) 삭제됨.')
+        break
+
+    elif deleteName<current.data:
+        if current.left == None:
+            print(deleteName,'이(가) 트리에 없음')
+            break
+        parent=current
+        current=parent.left
+    else:
+        if current.right == None:
+            print(deleteName,'이(가) 트리에 없음')
+            break
+        parent=current
+        current=parent.right
 
 
