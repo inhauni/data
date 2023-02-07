@@ -60,6 +60,7 @@ memory.append(node)
 
 
 # 이진 탐색 트리 생성
+
 for book in bookAry[1:]:
     name = book[1]
     node = TreeNode()
