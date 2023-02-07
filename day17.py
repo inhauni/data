@@ -1,5 +1,6 @@
 #이진트리
 
+import random
 class TreeNode():
     def __init__(self):
         self.left=None
@@ -8,22 +9,28 @@ class TreeNode():
 
 
 memory=[]
-root=None
-nameAry=["블랙핑크"'레드벨벳','마마무','에이핑크','걸스데이','트와이스']
+rootBook, rootAuth =None, None
+bookAry=[['어린왕자', '쌩떽쥐베리'],['이방인', '까뮈'], ['부활', '톨스토이'],
+		   ['신곡', '단테'], ['돈키호테', '세브반테스'], ['동물농장', '조지오웰'],
+		   ['데미안','헤르만헤세'], ['파우스트', '괴테'], ['대지', '펄벅']]
+random.shuffle(bookAry) # -> 매번 랜덤으로 배열
 
+
+## 책이름 트리
 
 node =TreeNode()
-node.data=nameAry[0]
-root=node
+node.data=bookAry[0][0]
+rootBook=node
 memory.append(node)
 
 # 이진 탐색 트리 생성
-for name in nameAry:
-
+for book in bookAry[1:]:
+    name=book[0]
     node=TreeNode()
     node.data=name
 
-    current=root
+    current=rootBook
+
     while True:
         if name<current.data:
             if current.left==None:
@@ -39,48 +46,70 @@ for name in nameAry:
     memory.append(node)
 
 
-deleteName='마마무'
+print("책 이름 트리 구성 완료!")
+
+
+
+
+## 저자이름 트리
+
+node =TreeNode()
+node.data=bookAry[0][1]
+rootAuth=node
+memory.append(node)
+
+
+# 이진 탐색 트리 생성
+for book in bookAry[1:]:
+    name = book[1]
+    node = TreeNode()
+    node.data = name
+
+    current = rootAuth
+
+    while True:
+        if name < current.data:
+            if current.left == None:
+                current.left = node
+                break
+            current = current.left
+        else:
+            if current.right == None:
+                current.right = node
+                break
+            current = current.right
+
+    memory.append(node)
+
+print("저자 이름 트리 구성 완료!")
+
+
+
+## 책 이름 및 작가 이름 검색
+
+bookOrauth=int(input('책검색(1), 작가검색(2) -->'))
+findName=input('검색할 책 또는 작가 : ')
+
+if bookOrauth == 1:
+    root=rootBook
+else:
+    root=rootAuth
 
 current=root
-parent=None
+
 while True:
-    if deleteName==current.data:
-
-        if current.left == None and current.right ==None:
-            if parent.left==current:
-                parent.left=None
-            else:
-                parent.right=None
-            del(current)
-
-        elif current.left != None and current.right ==None:
-            if parent.left==current:
-                parent.left=current.left
-            else:
-                parent.right=current.left
-            del(current)
-
-        elif current.left == None and current.right != None:
-            if parent.left == current:
-                parent.left = current.right
-            else:
-                parent.right = current.right
-            del (current)
-
-        print(deleteName,'이(가) 삭제됨.')
+    if findName == current.data:
+        print(f'{findName} 을(를) 찾음')
         break
-
-    elif deleteName<current.data:
+    elif findName < current.data:
         if current.left == None:
-            print(deleteName,'이(가) 트리에 없음')
+            print(f'{findName} 이(가) 트리에 존재하지 않음')
             break
-        parent=current
-        current=parent.left
-    else:
-        if current.right == None:
-            print(deleteName,'이(가) 트리에 없음')
-            break
-        parent=current
-        current=parent.right
+        current=current.left
 
+    else:
+        if current.right== None:
+            print(f'{findName} 이(가) 트리에 존재하지 않음')
+            break
+        current=current.right
 
