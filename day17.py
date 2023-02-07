@@ -1,74 +1,80 @@
 
 
-def is_stackFull():
-    if top>=SIZE-1:
+def is_queueFull():
+    global SIZE,queue,rear,front
+
+    if (rear+1) % SIZE == front:
         return True
     return False
 
-def is_stackEmpty():
-    if top == -1:
+def is_queueEmpty():
+    global SIZE,queue,rear,front
+
+    if rear == front:
         return True
     return False
 
-def push(data):
-    global SIZE,stack,top
+def enQueue(data):
+    global SIZE,queue,rear,front
 
-    if is_stackFull():
-      return
-
-    top += 1
-    stack[top]= data
-
-
-def pop():
-    global SIZE, stack, top
-    if is_stackEmpty():
+    if is_queueFull():
+        print("Queue is Full")
         return
-    temp =stack[top]
-    stack[top]=None
-    top -=1
-    return temp
+    rear = (rear+1) % SIZE
+    queue[rear]= data
+
+
+def deQueue():
+    global SIZE,queue,rear,front
+    if is_queueEmpty():
+        print("Queue is Empty")
+        return
+    front=(front+1) % SIZE
+    data =queue[front]
+    queue[front]=None
+    return data
 
 def peek():
-    global SIZE, stack, top
-    if is_stackEmpty():
-        return None   #peek했지만 top에 아무것도 없는 경우
-    return stack[top]
+    global SIZE,queue,rear,front
+    if is_queueEmpty():
+        print("Queue is Empty")
+        return None
+    return queue[(front+1) % SIZE]
 
 
-def checkBracket(expr):
-    for ch in expr:
-        if ch in '([{<':
-            push(ch)
-        elif ch in ')]}>':
-            out = pop()
-            if ch==')' and out =='(':
-                pass
-            elif ch==']' and out =='[':
-                pass
-            elif ch=='}' and out =='{':
-                pass
-            elif ch=='>' and out =='<':
-                pass
-            else:
-                return False
-        else: pass
-
-    if is_stackEmpty():
-        return True
-    else:
-        return False
 
 
-SIZE= 100
-stack =[None for _ in range(SIZE)]
-top=-1  # top의 초기값
+SIZE= 5
+queue =[None for _ in range(SIZE)]
+rear= front = 0  # top의 초기값
 
 if __name__ == "__main__":
 
-    exprAry=['()',')(','(()','(]','(<{}[]>)','(())']
+    select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
 
-    for expr in exprAry:
-        top=-1  # 하나 검사 후 초기화
-        print(expr, '==>', checkBracket(expr))
+    while True:
+
+        if select == 'X' or select == 'x':
+            print("프로그램 종료")
+            break
+        elif select == 'I' or select == 'i':
+            data = input("입력할 데이터 => ")
+            enQueue(data)
+            print("스택 상태 : ", queue, "\n")
+            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
+        elif select == 'E' or select == 'e':
+            data = deQueue()
+            print("추출된 데이터 : ", data)
+            print("스택 상태 : ", queue, "\n")
+            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
+        elif select == 'V' or select == 'v':
+            data = peek()
+            print("확인된 데이터 : ", data)
+            print("스택 상태 : ", queue, "\n")
+            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
+        else:
+            print("올바른 코드를 입력하시오\n")
+            select = input("삽입(I)/추출(E)/확인(V)/종료(X)/ 중 하나를 선택 ==> ")
+            
+
 
