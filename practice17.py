@@ -1,84 +1,66 @@
-# 8 - 1
-
-
+# 7 - 1
 import random
 
-class Node():
-    def __init__(self):
-        self.left=None
-        self.data=None
-        self.right=None
 
+def isQueueEmpty():
+    global rear, front, queue, SIZE
+    if rear==front:
+        return True
+    return False
 
-## 전역 변수 생성
+def isQueueFull():
+    global rear, front, queue, SIZE
 
-memory=[]
-root=None
-storeAry=['레쓰비 캔커피', '레쓰비 캔커피', '레쓰비 캔커피', '도시락','도시락', '삼각김밥',
-          '삼각김밥','삼각김밥','삼각김밥','코카콜라', '코카콜라', '츄파츕스','츄파츕스','츄파츕스', '삼다수']
+    if rear==SIZE-1:
+        return True
+    return False
 
-random.shuffle(storeAry)
+def enQueue(data):
+    global rear, front, queue, SIZE
 
-#   storeAry=random.choice(storeAry) for _ in range(20) -> 이런 식으로도 가능
-
-
-print(f'오늘 판매될 물건(중복O) --> {storeAry}\n')
-
-#이진 탐색 함수 생성
-
-node=Node()
-node.data=storeAry[0]
-root=node
-memory.append(node)
-
-for store in storeAry[1:]:
-
-    node=Node()
-    node.data=store
-
-    current=root
-
-    while True:
-        if store == current.data:
-            break
-        if current.data>store:
-            if current.left==None:
-                current.left=node
-                break
-            current=current.left
-        else:
-            if current.right==None:
-                current.right=node
-                break
-            current=current.right
-
-    memory.append(node)
-
-
-print('이진 탐색 트리 구성 완료!\n')
-
-
-
-## 탐색하여 중복값 제외
-
-# 이진 트리 후위 순회
-
-sellAry=[]
-def postorder(node):
-
-    if node==None:
+    if isQueueFull():
+        print("Queue is FUll")
         return
-    postorder(node.left)
-    postorder(node.right)
-    # print(node.data, end=' ')
-    sellAry.append(node.data)
+    rear+=1
+    queue[rear]=data
 
 
-postorder(root)
-print(f'오늘 판매된 종류(중복X) --> {sellAry}',end='')
+def deQueue():
+    global rear, front, queue, SIZE
 
+    if isQueueEmpty():
+        print("Queue is Empty")
+        return None
 
+    front += 1
+    temp = queue[front]
+    queue[front]=None
+    for i in range(front+1,rear+1):
+        queue[i-1]=queue[i]
+        queue[i]=None
+    rear -=1
+    front-=1
 
+    return temp
 
+def peekQueue():
+    if isQueueEmpty():
+        return None
+    return queue[front+1]
 
+SIZE=7
+rear=front=-1
+queue=[None for _ in range(SIZE)]
 
+BTS=['정국','지민','뷔','진','슈가','RM','제이홉']
+random.shuffle(BTS)
+
+for member in BTS:
+    enQueue(member)
+
+while True:
+    print(f'\n대기 줄 상태 : {queue}')
+    if queue.count(None)==SIZE:
+        print('식당 영업 종료!')
+        break
+    print(f'{deQueue()} 님 식당에 들어감')
