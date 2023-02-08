@@ -1,67 +1,74 @@
-class Node():
+class Graph:
+    def __init__(self,size):
+        self.size=size
+        self.graph=[[0 for _ in range(size)] for _ in range(size)]
 
-    def __init__(self):
-        self.data=None
-        self.link=None
+    def printGraph(self,array):
 
-def makeNameAndEmail():
-    name = input('이름 : ')
-    if name == '\n':
-        return
-    email = input('이메일 : ')
-    return name,email
+        if array is None:
+            for row in range(self.size):
+                for col in range(self.size):
+                    print(self.graph[row][col], end='')
+                print()
+        else:
+            print('\t',end='')
+            for name in array:
+                print(name,end=' ')
+            print()
+            for row in range(self.size):
+                print(array[row],' ',end='')
+                for col in range(self.size):
+                    print(self.graph[row][col], end='   ')
+                print()
 
+## 전역변수 설정
 
-def printNodes(start):
+G1=None
+NameAry=['화사', '문별', '휘인', '솔라']
+stack=[]
+visited=[]
 
-    current=start
-    if current==None:
-        return
-    print(current.data,end=' ')
-    while current.link != None:
-        current=current.link
-        print(current.data,end=' ')
+## 그래프 생성
 
-    print()
+g1=Graph(4)
+g1.graph[0][3]=1;
+g1.graph[1][2]=1;g1.graph[1][3]=1;
+g1.graph[2][1]=1;
+g1.graph[3][0]=1;g1.graph[3][1]=1;
 
-
-memory=[]
-head,current,pre=None, None, None
-
-## 첫번째 노드 생성
-
-node=Node()
-node.data=(makeNameAndEmail())
-head= node
-memory.append(node)
-printNodes(head)
-while True:
-
-    node = Node()
-    node.data = (makeNameAndEmail())
-    memory.append(node)
-
-    if head==None:
-        head=node
-        continue
-
-    if head.data[1]>node.data[1] :
-        node.link=head
-        head=node
-        continue
-
-    current= head
-    while current.link != None:
-        pre=current
-        current=node
-        if current.data[1]>node.data[1]:
-            node.link=current
-            pre.link=node
-            break
-
-    current.link=node
-    printNodes(head)
+print('----생성된 그래프----\n')
+g1.printGraph(NameAry)
 
 
+# 깊이 우선 탐색 구현 (DFS)
+
+current=0
+root=current
+stack.append(0)
+visited.append(0)
 
 
+while len(stack) != 0:
+
+    next=None
+    for vertex in range(g1.size):
+        if g1.graph[current][vertex]==1:
+                if vertex in visited:
+                    pass
+                else:
+                    next = vertex
+                    break
+
+    if next is not None:
+        current=next
+        stack.append(current)
+        visited.append(current)
+
+    else:
+        current=stack.pop()
+
+
+print(f'\n방문순서 : ',end=' ')
+for visit in visited:
+    visit=NameAry[visit]
+    print(visit,end=' ')
