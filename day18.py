@@ -10,12 +10,14 @@ stack = []
 visitedAry = []		# 방문한 정점
 
 ## 메인 코드 부분 ##
-G1 = Graph(4)
-G1.graph[0][2] = 1; G1.graph[0][1] = 1;
+G1 = Graph(9)
+G1.graph[0][2] = 1; G1.graph[0][1] = 1;G1.graph[0][4] = 1;
 G1.graph[1][2] = 1;G1.graph[1][0] = 1;G1.graph[1][3] = 1;
-G1.graph[2][0] = 1; G1.graph[2][1] = 1; G1.graph[2][3] = 1;
+G1.graph[2][0] = 1; G1.graph[2][1] = 1; G1.graph[2][3] = 1;G1.graph[2][4] = 1;G1.graph[2][5] = 1;
 G1.graph[3][1] = 1; G1.graph[3][2] = 1
-
+G1.graph[4][0] = 1;G1.graph[4][2] = 1;G1.graph[4][6] = 1;G1.graph[4][7] = 1;
+G1.graph[5][2] = 1;
+G1.graph[6][4] = 1;G1.graph[6][8] = 1;
 
 print('## G1 무방향 그래프 ##')
 for row in range(4) :
@@ -37,12 +39,13 @@ while (len(stack) != 0) :
 				next = vertex
 				break
 
-	if next is not None :			  	   # 다음에 방문할 정점이 있는 경우
+	if next != None :			  	   # 다음에 방문할 정점이 있는 경우
 		current = next
 		stack.append(current)
 		visitedAry.append(current)
 	else :            	  	  	  	  # 다음에 방문할 정점이 없는 경우
 		current = stack.pop()
+
 
 print('방문 순서 -->', end='')
 for i in visitedAry :
