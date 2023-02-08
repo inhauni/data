@@ -6,7 +6,7 @@ class Graph() :
 
 ## 전역 변수 선언 부분 ##
 G1 = None
-queue = []
+stack = []
 visitedAry = []		# 방문한 정점
 
 ## 메인 코드 부분 ##
@@ -24,10 +24,10 @@ for row in range(4) :
 	print()
 
 current = 0		# 시작 정점 A
-queue.append(current)
+stack.append(current)
 visitedAry.append(current)
 
-while (len(queue) != 0) :
+while (len(stack) != 0) :
 	next = None
 	for vertex in range(4) :
 		if G1.graph[current][vertex] == 1 :
@@ -39,13 +39,10 @@ while (len(queue) != 0) :
 
 	if next is not None :			  	   # 다음에 방문할 정점이 있는 경우
 		current = next
-		queue.append(current)
+		stack.append(current)
 		visitedAry.append(current)
 	else :            	  	  	  	  # 다음에 방문할 정점이 없는 경우
-		current = queue.pop()  # Queue일 경우 오버헤드 발생 ->
-                                # 앞에걸 뺀 후 뒤의 공백을 만들기 위해 자료들을 한칸씩 앞으로 당기는 작업이 필요
-                                # if 자료의 수가 많으면 오버헤드 발생
-
+		current = stack.pop()
 
 print('방문 순서 -->', end='')
 for i in visitedAry :
