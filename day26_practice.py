@@ -1,53 +1,45 @@
-## 응용문제 13 -1
-
+## 응용문제 13 -2
 import random
 
-def find_product(list,find_product):
 
-    position=-1
+def find_array(list, f_data):
+    count =0
+    for idx in range(len(list)):
+        count +=1
+        if list[idx]==f_data:
+            return count
+        if count == len(list):
+            return f'{count} (목록에 존재하지 않는 정수)'
+
+
+
+def find_binary(list, f_data):
     start=0
-    end=len(list)-1
+    end= len(list) - 1
+
+    count =0
 
     while(start<=end):
-        mid=(start+end)//2
-        if find_product==list[mid]:
-            return mid
-        elif find_product > list[mid]:
+        mid=(start+end) // 2
+        count += 1
+        if f_data == list[mid]:
+            return count
+        elif f_data > list[mid]:
             start = mid + 1
         else:
-            end=mid-1
+            end = mid -1
 
-    return position
-
-
-
-products=['cake','milk','pizza','orange juice','candy','ice cream']
-sells = random.choices(products, k=10)
-
-print(f'오늘 판매된 전체 물건 (중복0,정렬x) ==> {sells}')
-sells.sort()                     # 정렬 완 (이진트리 구현 전제조건 충족)
-print(f'오늘 판매된 전체 물건 (중복0,정렬0) ==> {sells}')
-print(f'오늘 판매된 전체 물건 (중복x,정렬0) ==> {sorted(list(set(sells)))}')  # set 는 중복 x-> 다시 list 타입으로 변환 -> 정렬
-
-products_idx=[]
-
-for product in list(sorted(list(set(sells)))):
-    count, pos = 0,0
-
-    while(True):
-        pos = find_product(sells, product)
-        if pos != -1:
-            count += 1
-            del(sells[pos])
-        else:
-            break
-
-    products_idx.append([product, count])
+    return f'{count} (목록에 존재하지 않는 정수)'
 
 
-print(f'결산 결과 ==> {products_idx}')
+r_list=random.choices(range(0,10000),k=1000000)
+print(f'비정렬 배열(100만 개) --> {r_list[0:5]} ~~~ {r_list[-5:-1]}')
 
+n_rlist=sorted(r_list)
+print(f'정렬 배열(100만 개) --> {n_rlist[0:5]} ~~~ {n_rlist[-5:-1]}\n')
 
-
-
+find_data=random.randrange(0,10000)
+print(f'검색할 데이터 = {find_data}\n')
+print(f'순차 검색(비정렬 데이터) --> {find_array(r_list,find_data)}회\n')
+print(f'이진 검색(정렬 데이터) --> {find_binary(n_rlist,find_data)}회')
 
